@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/welcome.dart';
 import 'package:flutter_app/leagues.dart';
@@ -25,13 +26,25 @@ class MyCustomForm extends StatefulWidget {
   const MyCustomForm({super.key});
 
   @override
-  MyCustomFormState createState() {
-    return MyCustomFormState();
-  }
+  State<MyCustomForm> createState() => _MyCustomFormState();
 }
 
-class MyCustomFormState extends State<MyCustomForm> {
+class _MyCustomFormState extends State<MyCustomForm> {
   final _formKey = GlobalKey<FormState>();
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _password = TextEditingController();
+
+  String submitText = 'please login';
+
+  Future<bool> _firebaseAuth(String emailText, String password) async {
+    try {
+      await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: emailText, password: password);
+      return true;
+    } on FirebaseAuthException {
+      return false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +80,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         TextFormField(
+                          controller: _email,
                           decoration: const InputDecoration(
                             hintText: 'Enter your email',
                           ),
@@ -78,6 +92,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                           },
                         ),
                         TextFormField(
+                          controller: _password,
                           decoration: const InputDecoration(
                             hintText: 'Enter your password',
                           ),
@@ -91,14 +106,20 @@ class MyCustomFormState extends State<MyCustomForm> {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 16.0),
                           child: ElevatedButton(
-                            onPressed: () {
+                            onPressed: () async {
 // Validate returns true if the form is valid, or false otherwise.
                               if (_formKey.currentState!.validate()) {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => const Leagues(),
-                                  ),
-                                );
+                                if (await _firebaseAuth(_email.text, _password.text) == true) {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => const Leagues(),
+                                    ),
+                                  );
+                                } else {
+                                  setState(() {
+                                    submitText = 'error logging in';
+                                  });
+                                }
                               }
                             },
                             child: const Text('Submit'),
@@ -106,7 +127,8 @@ class MyCustomFormState extends State<MyCustomForm> {
                         ),
                       ],
                     ),
-                  )
+                  ),
+                  SelectableText('$submitText'),
                 ]))
 // home: const MyHomePage(title: 'Flutter Demo Home Page'),
         );

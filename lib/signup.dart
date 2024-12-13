@@ -32,8 +32,9 @@ class MyCustomForm extends StatefulWidget {
 
 class MyCustomFormState extends State<MyCustomForm> {
   final _formKey = GlobalKey<FormState>();
+  final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
-  final TextEditingController _confirmPassword = TextEditingController();  
+  final TextEditingController _reenterPassword = TextEditingController();  
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +70,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         TextFormField(
-                          controller: _password,
+                          controller: _email,
                           decoration: const InputDecoration(
                             hintText: 'Enter your email',
                           ),
@@ -81,7 +82,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                           },
                         ),
                         TextFormField(
-                          controller: _confirmPassword,
+                          controller: _password,
                           decoration: const InputDecoration(
                             hintText: 'Enter your password',
                           ),
@@ -93,6 +94,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                           },
                         ),
                         TextFormField(
+                          controller: _reenterPassword,
                           decoration: const InputDecoration(
                             hintText: 'Reenter your password',
                           ),
