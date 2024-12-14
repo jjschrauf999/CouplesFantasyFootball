@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'welcome.dart';
-import 'authentication.dart';
+import 'firebase.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: ApplicationState().init(),
+      future: FirebaseClass().init(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Error();
