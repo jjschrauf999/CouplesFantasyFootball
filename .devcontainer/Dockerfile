@@ -21,20 +21,24 @@ RUN . "$NVM_DIR/nvm.sh" && nvm alias default v${NODE_VERSION}
 ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
 RUN node --version
 RUN npm --version
+#Expose port
+FROM alpine:latest
+EXPOSE 3000
 
-FROM debian:bookworm
-
-RUN apt-get update && apt-get -y install git curl unzip
-
-RUN apt-get autoremove -y \
-    && apt-get clean -y \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN mkdir /home/codespace
-WORKDIR /home/codespace
-
-ENV PUB_CACHE=/home/codespace/.pub_cache
-ENV PATH="/home/codespace/flutter/bin:$PATH"
-
-RUN git clone https://github.com/flutter/flutter && \
-    /home/codespace/flutter/bin/flutter config --enable-w
+#Debian
+#FROM debian:bookworm
+#
+#RUN apt-get update && apt-get -y install git curl unzip
+#
+#RUN apt-get autoremove -y \
+#    && apt-get clean -y \
+#    && rm -rf /var/lib/apt/lists/*
+#
+#RUN mkdir /home/codespace
+#WORKDIR /home/codespace
+#
+#ENV PUB_CACHE=/home/codespace/.pub_cache
+#ENV PATH="/home/codespace/flutter/bin:$PATH"
+#
+#RUN git clone https://github.com/flutter/flutter && \
+#    /home/codespace/flutter/bin/flutter config --enable-w
