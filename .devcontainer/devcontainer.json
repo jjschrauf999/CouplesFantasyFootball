@@ -9,7 +9,8 @@
       "extensions": [
         "Dart-Code.dart-code",
         "Dart-Code.flutter",
-        "ms-azuretools.vscode-docker"
+        "ms-azuretools.vscode-docker",
+        "localizely.flutter-intl"
       ]
     }
   }
