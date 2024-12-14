@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'welcome.dart';
 import 'firebase.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'generated/l10n.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,13 +13,34 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return MaterialApp(
+            localizationsDelegates: [
+                S.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: S.delegate.supportedLocales,
+            title: 'Flutter Demo',
+            home: StartupFun(),
+        );
+  }
+}
+
+class StartupFun extends StatelessWidget {
+  const StartupFun({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return FutureBuilder(
       future: FirebaseClass().init(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Error();
         }
-
+    
         switch (snapshot.connectionState) {
           case ConnectionState.none:
             return Error();
@@ -73,7 +96,7 @@ class Loading extends StatelessWidget {
         ),
         home: Scaffold(
             appBar: AppBar(
-              title: const Text('LOADING'),
+              title: Text(S.of(context).pageHomeWelcome),
               backgroundColor: Colors.greenAccent[400],
             ),
             body: Column(
