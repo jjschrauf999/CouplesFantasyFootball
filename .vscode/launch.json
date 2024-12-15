@@ -2,13 +2,21 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
+			"name": "Dart: Attach to Process",
+			"type": "dart",
+			"request": "attach",
+			"args": [
+				"web-server",
+				"--debug"
+			]
+		},
+		{
 			"name": "Flutter",
 			"request": "launch",
 			"type": "dart",
-			"program": "lib/main.dart",
 			"args": [
-				"--web-hostname",
-				"any"
+				"web-server",
+				"--debug"
 			]
 		}
 	]
