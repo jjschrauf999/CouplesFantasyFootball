@@ -22,9 +22,6 @@ ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
 RUN node --version
 RUN npm --version
 
-#Exposing port
-EXPOSE 3000
-
 #Debian for debugging
 FROM debian:bookworm
 
