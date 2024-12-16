@@ -39,3 +39,6 @@ ENV PATH="/home/codespace/flutter/bin:$PATH"
 
 RUN git clone https://github.com/flutter/flutter && \
     /home/codespace/flutter/bin/flutter config --enable-web
+
+#Exposing port
+EXPOSE 3000
